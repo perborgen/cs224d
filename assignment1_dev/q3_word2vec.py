@@ -114,7 +114,6 @@ def negSamplingCostAndGradient(predicted, target, outputVectors, dataset,
     # assignment!
     
     ### YOUR CODE HERE
-    #negative_samples = [dataset.sampleTokenIdx() for i in range(K)]
 
     v_c = predicted
     u_o = outputVectors[target]
@@ -133,12 +132,10 @@ def negSamplingCostAndGradient(predicted, target, outputVectors, dataset,
     negative_vectors = outputVectors[negative_samples]
 
     f1 = np.dot(u_o.T, v_c)
-    print 'f1: ', f1
     sig1 = sigmoid(f1)
 
 
     f2 = negative_vectors.dot(v_c)
-    print 'f2: ', f2
     sig2 = sigmoid(-f2)
 
     c1 = -np.log(sig1)
@@ -149,16 +146,33 @@ def negSamplingCostAndGradient(predicted, target, outputVectors, dataset,
     print 'c2: ', c2
     print 'cost: ', cost
 
+    # calculating gradPred : check the derivative of J wrt v_c in the solution set
+    first = sig1 - 1
+    second = sig2 - 1
+    first_multiplied_with_u = np.dot(first, u_o)
+    second_multiplied_with_u = np.dot(second, negative_vectors)
+    gradPred = first_multiplied_with_u - second_multiplied_with_u
+    print 'gradPred: ', gradPred
 
 
 
+    # trying to calculate grad
+    grad_first = first * v_c
+    grad_second = second * v_c
 
-## THE SOLUTION CODE PROVIDE
-    grad = np.zeros(outputVectors.shape)
-    gradPred = np.zeros(predicted.shape)
+    print 'second: '
+    print second
+    print 'v_c'
+    print v_c
+
+
+    ## THE SOLUTION CODE PROVIDED
+
+    # grad = np.zeros(outputVectors.shape)
+    # gradPred = np.zeros(predicted.shape)
     
-    indices = [target]
-    indices += negative_samples
+    # indices = [target]
+    # indices += negative_samples
 
     # for k in xrange(K):
     #     newidx = dataset.sampleTokenIdx()
@@ -166,47 +180,29 @@ def negSamplingCostAndGradient(predicted, target, outputVectors, dataset,
     #         newidx = dataset.sampleTokenIdx()
     #     indices += [newidx]
         
-    labels = np.array([1] + [-1 for k in xrange(K)])
-    vecs = outputVectors[indices,:]
-    f1_fasit =  vecs.dot(predicted)
-    print 'f1_fasit: ', f1_fasit
-    t = sigmoid(vecs.dot(predicted) * labels)
-    cost = -np.sum(np.log(t))
-    print 'solution cost: ', cost
-    
+    # labels = np.array([1] + [-1 for k in xrange(K)])
+    # vecs = outputVectors[indices,:]
+    # t = sigmoid(vecs.dot(predicted) * labels)
+    # cost = -np.sum(np.log(t))
+    # delta = labels * (t - 1)
+    # gradPred = delta.reshape((1,K+1)).dot(vecs).flatten()
 
-    # check the derivative of J wrt v_c in the solution set
-    first = sig1 - 1
-    second = sig2 - 1
-    first_multiplied_with_u = np.dot(first, u_o)
-    second_multiplied_with_u = np.dot(second, negative_vectors)
-    gradPred = first_multiplied_with_u - second_multiplied_with_u
-    print 'gradPred: ', gradPred
-    print 'first: ', first
-
-    delta = labels * (t - 1)
-    print 'delta: '
-    print delta
-    print 'vecs: ' 
-    print vecs
-
-    #gradPred = delta.reshape((1,K+1)).dot(vecs).flatten()
-    print 'gradPred: ', gradPred
     # gradtemp = delta.reshape((K+1,1)).dot(predicted.reshape(
     #     (1,predicted.shape[0])))
     # for k in xrange(K+1):
     #     grad[indices[k]] += gradtemp[k,:]
 
 
-    print 'second: '
-    print second
-    print 'v_c'
-    print v_c
 
-    grad_first = first * v_c
-    grad_second = second * v_c
 
-    ## THIS WAS GREYED OUT FROM THE BEGINNING
+
+
+
+
+
+
+
+    ## THIS WAS GREYED OUT FROM THE BEGINNING - PROBABLY AN OLD SOLUTION
 #     t = sigmoid(predicted.dot(outputVectors[target,:]))
 #     cost = -np.log(t)
 #     delta = t - 1
