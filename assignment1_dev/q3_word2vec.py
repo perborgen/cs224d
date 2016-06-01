@@ -146,7 +146,7 @@ def negSamplingCostAndGradient(predicted, target, outputVectors, dataset,
     print 'c2: ', c2
     print 'cost: ', cost
 
-    # calculating gradPred : check the derivative of J wrt v_c in the solution set
+    # PART 1 : calculating gradPred : check the derivative of J wrt v_c in the solution set
     first = sig1 - 1
     second = sig2 - 1
     first_multiplied_with_u = np.dot(first, u_o)
@@ -156,7 +156,7 @@ def negSamplingCostAndGradient(predicted, target, outputVectors, dataset,
 
 
 
-    # trying to calculate grad
+    # PART 1 : STUCK : trying to calculate grad
     grad_first = first * v_c
     grad_second = second * v_c
 
