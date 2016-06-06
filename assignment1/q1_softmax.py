@@ -7,6 +7,7 @@ def softmax_correct(x):
     print 'softmax for ' , x , ' is : ', s
     return s 
 
+
 def softmax(x):
     """
     Compute the softmax function for each row of the input x.
