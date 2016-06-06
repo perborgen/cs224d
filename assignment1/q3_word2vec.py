@@ -236,7 +236,7 @@ def skipgram(currentWord, C, contextWords, tokens, inputVectors, outputVectors,
     
     # ### END YOUR CODE
     
-    return costt, gradIn, gradOut
+    return cost, gradIn, gradOut
 
 def cbow(currentWord, C, contextWords, tokens, inputVectors, outputVectors, 
     dataset, word2vecCostAndGradient = softmaxCostAndGradient):
