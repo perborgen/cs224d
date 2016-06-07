@@ -24,15 +24,26 @@ def gradcheck_naive(f, x):
         ### possible to test cost functions with built in randomness later
         ### YOUR CODE HERE:
 
-        I = np.zeros_like(x)
-        I[ix] = 1
-        random.setstate(rndstate)
-        fxh_p, _ = f(x + h*I)
-        random.setstate(rndstate)
-        fxh_m, _ = f(x - h*I)
-        numgrad = (fxh_p - fxh_m) / (2*h)
+        # I = np.zeros_like(x)
+        # I[ix] = 1
+        # random.setstate(rndstate)
+        # fxh_p, _ = f(x + h*I)
+        # random.setstate(rndstate)
+        # fxh_m, _ = f(x - h*I)
+        # numgrad = (fxh_p - fxh_m) / (2*h)
 
         ### END YOUR CODE
+
+        # replace with return to avoid side effects
+        x[ix] += h # increment by h
+        random.setstate(rndstate)  
+        fxh, _ = f(x) # evalute f(x + h)
+        x[ix] -= 2 * h # restore to previous value (very important!)
+        random.setstate(rndstate)  
+        fxnh, _ = f(x)
+        x[ix] += h
+        numgrad = (fxh - fxnh) / 2 / h
+
 
         # Compare gradients
         reldiff = abs(numgrad - grad[ix]) / max(1, abs(numgrad), abs(grad[ix]))

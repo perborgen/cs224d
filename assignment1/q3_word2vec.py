@@ -197,42 +197,42 @@ def skipgram(currentWord, C, contextWords, tokens, inputVectors, outputVectors,
     # free to reference the code you previously wrote for this        
     # assignment!
 
-    print 'currentWord: ', currentWord
-    print 'C: ', C
-    print 'contextWords: ', contextWords
-    print 'tokens: ', tokens
-    print 'inputVectors: ', inputVectors
-    print 'outputVectors: ', outputVectors
-    print 'dataset: ', dataset
+    # print 'currentWord: ', currentWord
+    # print 'C: ', C
+    # print 'contextWords: ', contextWords
+    # print 'tokens: ', tokens
+    # print 'inputVectors: ', inputVectors
+    # print 'outputVectors: ', outputVectors
+    # print 'dataset: ', dataset
 
 
     ## I DONT UNDERSTAND:
     ## Is outputVectors the vectors for the words in the window or the entire vocabulary?
-    v_c = inputVectors[tokens[currentWord]]
-    cost = 0
-    gradIn = np.zeros(inputVectors.shape)
-    gradOut = np.zeros(outputVectors.shape)
-    for u in contextWords:
-        index = tokens[u]
-        c, gradPred, grad = word2vecCostAndGradient(v_c, index, outputVectors, dataset)
-        cost += cost
-        gradIn[index] += gradPred
-        gradOut += grad
+    # v_c = inputVectors[tokens[currentWord]]
+    # cost = 0
+    # gradIn = np.zeros(inputVectors.shape)
+    # gradOut = np.zeros(outputVectors.shape)
+    # for u in contextWords:
+    #     index = tokens[u]
+    #     c, gradPred, grad = word2vecCostAndGradient(v_c, index, outputVectors, dataset)
+    #     cost += cost
+    #     gradIn[index] += gradPred
+    #     gradOut += grad
 
 
     ### YOUR CODE HERE
-    # currentI = tokens[currentWord]
-    # predicted = inputVectors[currentI, :]
+    currentI = tokens[currentWord]
+    predicted = inputVectors[currentI, :]
     
-    # cost = 0.0
-    # gradIn = np.zeros(inputVectors.shape)
-    # gradOut = np.zeros(outputVectors.shape)
-    # for cwd in contextWords:
-    #     idx = tokens[cwd]
-    #     cc, gp, gg = word2vecCostAndGradient(predicted, idx, outputVectors, dataset)
-    #     cost += cc
-    #     gradOut += gg
-    #     gradIn[currentI, :] += gp
+    cost = 0.0
+    gradIn = np.zeros(inputVectors.shape)
+    gradOut = np.zeros(outputVectors.shape)
+    for cwd in contextWords:
+        idx = tokens[cwd]
+        cc, gp, gg = word2vecCostAndGradient(predicted, idx, outputVectors, dataset)
+        cost += cc
+        gradOut += gg
+        gradIn[currentI, :] += gp
     
     # ### END YOUR CODE
     
