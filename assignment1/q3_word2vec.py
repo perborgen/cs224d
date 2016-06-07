@@ -197,13 +197,13 @@ def skipgram(currentWord, C, contextWords, tokens, inputVectors, outputVectors,
     # free to reference the code you previously wrote for this        
     # assignment!
 
-    # print 'currentWord: ', currentWord
-    # print 'C: ', C
-    # print 'contextWords: ', contextWords
-    # print 'tokens: ', tokens
-    # print 'inputVectors: ', inputVectors
-    # print 'outputVectors: ', outputVectors
-    # print 'dataset: ', dataset
+    print 'currentWord: ', currentWord
+    print 'C: ', C
+    print 'contextWords: ', contextWords
+    print 'tokens: ', tokens
+    print 'inputVectors: ', inputVectors
+    print 'outputVectors: ', outputVectors
+    print 'dataset: ', dataset
 
 
     ## I DONT UNDERSTAND:
