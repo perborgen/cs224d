@@ -155,7 +155,6 @@ def negSamplingCostAndGradient(predicted, target, outputVectors, dataset,
     print 'gradPred: ', gradPred
 
 
-
     # PART 1 : STUCK : trying to calculate grad
     grad_first = first * v_c
     grad_second = second * v_c
@@ -221,6 +220,8 @@ def negSamplingCostAndGradient(predicted, target, outputVectors, dataset,
 #         grad[idx, :] += delta * predicted
     
     ### END YOUR CODE
+
+    ## adding an error 'costt' here, to make the script stop
     return costt, gradPred, grad
 
 
