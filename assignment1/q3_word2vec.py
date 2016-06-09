@@ -94,29 +94,30 @@ def negSamplingCostAndGradient(predicted, target, outputVectors, dataset,
 
     grad = np.zeros(U.shape)
     gradPred = np.zeros(v_c.shape)
-    negative_samples = [target]
+    samples = [target]
     for i in xrange(K):
         newidx = dataset.sampleTokenIdx() # why is our outputVectors our entire dataset??? Shouldn't outputVectors be window, and dataset our entire vocabulary?
         while newidx == target:
             newidx = dataset.sampleTokenIdx()
-        negative_samples.append(newidx)
+        samples.append(newidx)
 
-    negative_vectors = outputVectors[negative_samples]
+    vecs = outputVectors[samples]
 
-    # f1 = np.dot(u_o.T, v_c)
-    # sig1 = sigmoid(f1)
-    # f2 = negative_vectors.dot(v_c)
-    # sig2 = sigmoid(-f2)
-    # negative_log = np.log(sig2)
-
-    z = sigmoid(negative_vectors.dot(v_c) * labels)
+    z = sigmoid(vecs.dot(v_c) * labels)
     cost = -np.sum(np.log(z))
     delta = labels * (z - 1)
-    predicted = predicted.reshape(1, predicted.shape[0])
-    gradTemp = delta.reshape(1 + K, 1).dot(predicted)
 
-    for i in xrange(len(negative_samples)):
-        grad[negative_samples[i]] = gradTemp[i]
+    # predicted = predicted.reshape(1, predicted.shape[0])
+    # gradPred = delta.reshape((1,K+1)).dot(vecs).flatten()
+    # gradtemp = delta.reshape(K+1, 1).dot(predicted)
+    # for i in xrange(len(samples)):
+    #     grad[samples[i]] = gradtemp[i,:]
+
+    gradPred = delta.reshape((1, K+1)).dot(vecs).flatten()
+    gradtemp = delta.reshape((K+1, 1)).dot(predicted.reshape(
+        (1, predicted.shape[0])))
+    for k in xrange(K+1):
+        grad[samples[k]] += gradtemp[k,:]
 
     # old way of calculating cost
     #c1 = np.log(sig1)

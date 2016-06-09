@@ -113,7 +113,7 @@ def sanity_check():
     
     print ""
 
-def your_sanity_checks(): 
+def your_sanity_checks():
     """
     Use this space add any additional sanity checks by running:
         python q3_sgd.py 
